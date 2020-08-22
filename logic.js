@@ -1,3 +1,55 @@
+const Tweeter = function () {
+    let postIdCounter = 3
+    let commentIdCounter = 7
+
+    const getPosts = function () {
+        return posts
+    }
+    const addPost = function (text) {
+        const id = 'p' + postIdCounter
+        const comments = []
+        posts.push({ text, id, comments })
+        postIdCounter++;
+    }
+
+    const removePost = function (postID) {
+        for (const key in posts) {
+            if (posts[key].id === postID) {
+                posts.splice(key, 1)
+
+            }
+        }
+
+    }
+    const addComment = function (text, postID) {
+        for (const key of posts) {
+            if (key.id === postID) {
+                key.comments.push({id:'c'+commentIdCounter,text})
+            }
+        }
+        commentIdCounter++;
+    }
+    const removeComment = function (postID, commentID) {
+        for (const i of posts) {
+            if (i.id === postID) {
+                const comment = i.comments
+                for (const key in comment) {
+                    if (comment[key].id === commentID) {
+                        comment.splice(key, 1)
+                    }
+                }
+            }
+        }
+
+    }
+    return {
+        getPosts,
+        addPost,
+        removePost,
+        addComment,
+        removeComment
+    }
+}
 const posts = [
     {
         text: "First post!",
@@ -19,35 +71,4 @@ const posts = [
     }
 ]
 
-let postIdCounter = posts.length
 
-const commentIdCounter = () => {
-    let id = 0 
-    for (comment in posts) {
-        id += posts[comment].comments.length
-    }
-    return id
-}
-
-
-const getPosts = function () {
-    return posts
-}
-const addPost = function (text) {
-    const id = 'p' + (postIdCounter+1)
-    const comments = []
-    posts.push({text, id, comments})
-}
-
-const removePost = function (postID) {
-    posts.splice(postID,1)
-}
- const addComment = function (postID, text) {
-     const comment = {id: 'c'+(commentIdCounter()+1), text: text}
-     posts[postID].comments.push(comment)
-     
- }
- const removeComent = function (postID, commentID) {
-     posts[postID].comments.splice(commentID, 1)
-    
- }
